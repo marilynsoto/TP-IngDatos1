@@ -1,5 +1,5 @@
 /*Creamos el database TinderVehiculosDB para almacenar 
-la informaci�n de nuestro proyecto y poder trabajar sobre ello.
+la información de nuestro proyecto y poder trabajar sobre ello.
 */
 CREATE DATABASE TinderVehiculosDB;
 
@@ -26,7 +26,7 @@ CREATE TABLE Planes (
 	   CantPublicacionesMax INT NOT NULL,
 	   FechaInicio DATE,
 	   FechaFin DATE,
-	   Precio FLOAT NOT NULL,
+	   Precio DECIMAL(10,2) NOT NULL,
 	   CantLikesMax INT NOT NULL,
 );
 
@@ -53,7 +53,6 @@ CREATE TABLE Vehiculos (
 	   Kilometros INT NOT NULL,
 	   Color VARCHAR(50) NOT NULL,
 	   Detalles VARCHAR(300),
-	   Precio FLOAT NOT NULL,
 	   TipoTransmicion VARCHAR(50) NOT NULL,
 	   CantAsientos INT,
 	   AceptaPermuta BIT,
@@ -64,22 +63,38 @@ CREATE TABLE Vehiculos (
 	   CONSTRAINT chk_Transmicion CHECK (TipoTransmicion IN ('Manual', 'Automatica')),
 	   CONSTRAINT chk_Kilometros CHECK (Kilometros >= 0),
 
-
 );
+CREATE TABLE Publicacion (
+       PublicacionID INT PRIMARY KEY IDENTITY(1,1),
+	   Titulo VARCHAR(50) NOT NULL,
+	   Descripcion VARCHAR(100),
+	   Precio DECIMAL(10,2),
+	   Fecha DATE,
+	   Estado VARCHAR(50),
+	   UsuarioID INT,
+	   VehiculoID INT,
+	   FOREIGN KEY (UsuarioID) REFERENCES Usuarios(UsuarioID),
+	   FOREIGN KEY (VehiculoID) REFERENCES Vehiculos(VehiculoID),
+	   CONSTRAINT chk_Precio CHECK (Precio >= 0),
+	   CONSTRAINT chk_Estado CHECK (Estado IN ('Activo', 'Pausado', 'Vendida', 'Eliminada')),
+);
+
+EXEC sp_rename 'Publicacion', 'Publicaciones';
 
 CREATE TABLE Swipe (
        SwipeID INT PRIMARY KEY IDENTITY(1,1),
-	   Accion VARCHAR(20),
+	   Accion VARCHAR(50),
 	   Fecha DATE,
-	   VehiculoID INT,
-	   UsuarioID INT,
-	   FOREIGN KEY (VehiculoID) REFERENCES Vehiculos(VehiculoID),
+	   PublicacionID INT,
+	   UsuarioID INT, --quien interactua con la publicación
+	   FOREIGN KEY (PublicacionID) REFERENCES Publicaciones(PublicacionID),
 	   FOREIGN KEY (UsuarioID) REFERENCES Usuarios(UsuarioID),
+	   CONSTRAINT chk_Accion CHECK (Accion IN ('Like', 'Dislike', 'SuperLike'))
 
 );
 
-CREATE TABLE Referencias (
-       ReferenciaID INT PRIMARY KEY IDENTITY(1,1),
+CREATE TABLE Preferencias (
+	   PreferenciaID INT PRIMARY KEY IDENTITY(1,1),
 	   Modelo VARCHAR(50),
 	   Anio INT,
 	   KilometrosMax INT NOT NULL,
@@ -88,14 +103,34 @@ CREATE TABLE Referencias (
 	   AceptaPermuta BIT DEFAULT 1,
 	   UsuarioID INT,
 	   FOREIGN KEY (UsuarioID) REFERENCES Usuarios(UsuarioID),
-	   CONSTRAINT chk_Kilometros CHECK (KilometrosMin >= 0 AND KilometrosMax >= 0)
+	   CONSTRAINT chk_KilometrosPreferencias CHECK (KilometrosMin >= 0 AND KilometrosMax >= 0)
 );
 
 CREATE TABLE Notificaciones (
        NotificacionID INT PRIMARY KEY IDENTITY(1,1),
 	   Consulta VARCHAR(100),
 	   Fecha DATE,
-	   UsuarioID INT,
+	   UsuarioID INT, --quien recibe el mensaje
+	   UsuarioEmisorID INT, -- quien emite el mensaje
 	   FOREIGN KEY (UsuarioID) REFERENCES Usuarios(UsuarioID),
+	   FOREIGN KEY (UsuarioEmisorID) REFERENCES Usuarios(UsuarioID),
 );
+
+GO
+
+ALTER TABLE Vehiculos 
+ADD TipoVehiculoID INT;
+
+GO
+
+CREATE TABLE TipoVehiculos (
+       TipoVehiculoID INT PRIMARY KEY IDENTITY(1,1),
+	   Nombre VARCHAR(50),
+);
+
+GO
+
+ALTER TABLE Vehiculos
+ADD CONSTRAINT fk_Vehiculo_TipoVehiculo FOREIGN KEY (TipoVehiculoID) REFERENCES TipoVehiculos(TipoVehiculoID);
+
 
