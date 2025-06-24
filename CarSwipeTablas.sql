@@ -1,5 +1,5 @@
 /*Creamos el database TinderVehiculosDB para almacenar 
-la información de nuestro proyecto y poder trabajar sobre ello.
+la informaciï¿½n de nuestro proyecto y poder trabajar sobre ello.
 */
 CREATE DATABASE CarSwipeDB;
 
@@ -55,8 +55,7 @@ CREATE TABLE Vehiculo (
 	   TipoCombustible varchar(20) NOT NULL,
 	   CantAsientos INT,
 	   AceptaPermuta BIT,
-	   UsuarioID INT, 
-	   TipoCombustibleID INT,
+	   UsuarioID INT,
 	   FOREIGN KEY (UsuarioID) REFERENCES Usuario(UsuarioID),
 	   CONSTRAINT chk_Transmicion CHECK (TipoTransmicion IN ('Manual', 'Automatica')),
 	   CONSTRAINT chK_Combustible CHECK (TipoCombustible in ('diesel', 'Nafta', 'Hibrido', 'Electricidad')),
@@ -80,7 +79,7 @@ CREATE TABLE Swipe (
 	   Accion VARCHAR(50),
 	   Fecha DATE,
 	   PublicacionID INT,
-	   UsuarioID INT, --quien interactua con la publicación
+	   UsuarioID INT, --quien interactua con la publicaciï¿½n
 	   FOREIGN KEY (PublicacionID) REFERENCES Publicacion(PublicacionID),
 	   FOREIGN KEY (UsuarioID) REFERENCES Usuario(UsuarioID),
 	   CONSTRAINT chk_Accion CHECK (Accion IN ('Like', 'Dislike', 'SuperLike'))
