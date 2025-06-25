@@ -129,7 +129,7 @@ EXEC InsertarVehiculo
     @Kilometros = 60000, 
     @Color = 'Gris', 
     @Detalles = 'Potente y confiable', 
-    @TipoTransmision = 'Automatica', 
+    @TipoTransmicion = 'Automatica', 
     @TipoCombustible = 'Nafta', 
     @CantAsientos = 5, 
     @AceptaPermuta = 1, 
@@ -151,3 +151,142 @@ EXEC InsertarVehiculo
     @TipoVehiculoID = 4;
 
 GO 
+-- INSERCIÓN DE DATOS PARA PUBLICACIONES.
+
+EXEC InsertarPublicacion 
+    @Descripcion = 'Camioneta lista para el trabajo pesado. Impecable.',
+    @Precio = 19500000.00,
+    @Fecha = '2025-06-24',
+    @Estado = 'Activo',
+    @VehiculoID = 5;
+EXEC InsertarPublicacion 
+    @Descripcion = 'Moto deportiva en excelente estado.Además posee los papeles correspondientes.',
+    @Precio = 5240000.00,
+    @Fecha = '2025-06-24',
+    @Estado = 'Activo',
+    @VehiculoID = 3;
+
+EXEC InsertarPublicacion 
+    @Descripcion = 'Convertible de lujo.Primer dueño.',
+    @Precio = 28500000.00,
+    @Fecha = '2025-06-24',
+    @Estado = 'Eliminada',
+    @VehiculoID = 4;
+EXEC InsertarPublicacion 
+    @Descripcion = 'Convertible de lujo.Primer dueño.',
+    @Precio = 30000000.00,
+    @Fecha = '2025-07-24',
+    @Estado = 'Activo',
+    @VehiculoID = 4;
+EXEC InsertarPublicacion 
+    @Descripcion = 'Camión Volvo preparado para transporte de carga pesada.Se encuentra en un estado perfecto, como nuevo.',
+    @Precio = 60000000.00,
+    @Fecha = '2025-06-24',
+    @Estado = 'Eliminada',
+    @VehiculoID = 7;
+EXEC InsertarPublicacion 
+    @Descripcion = 'Camión Volvo preparado para transporte de carga pesada.Se encuentra en un estado perfecto, como nuevo.',
+    @Precio = 58000000.00,
+    @Fecha = '2025-06-24',
+    @Estado = 'Activo',
+    @VehiculoID = 7;
+
+GO
+-- INSERCION DE DATOS PARA PREFERENCIAS.
+
+EXEC InsertarPreferencia 
+    @Marca = 'BMW', 
+    @Modelo = 'Z4', 
+    @Anio = 2022, 
+    @KilometrosMin = 0, 
+    @KilometrosMax = 30000, 
+    @Color = 'Azul', 
+    @AceptaPermuta = 0, 
+    @UsuarioID = 3;
+EXEC InsertarPreferencia 
+    @Marca = 'Ford', 
+    @Modelo = 'F-150', 
+    @Anio = 2021, 
+    @KilometrosMin = 0, 
+    @KilometrosMax = 60000, 
+    @Color = 'Blanco', 
+    @AceptaPermuta = 1, 
+    @UsuarioID = 7;
+EXEC InsertarPreferencia 
+    @Marca = 'Honda', 
+    @Modelo = 'CBR500R', 
+    @Anio = 2020, 
+    @KilometrosMin = 0, 
+    @KilometrosMax = 25000, 
+    @Color = 'Rojo', 
+    @AceptaPermuta = 0, 
+    @UsuarioID = 2;
+EXEC InsertarPreferencia 
+    @Marca = 'Jeep', 
+    @Modelo = 'Grand Cherokee', 
+    @Anio = 2020, 
+    @KilometrosMin = 0, 
+    @KilometrosMax = 50000, 
+    @Color = 'Blanco', 
+    @AceptaPermuta = 0, 
+    @UsuarioID = 5;
+EXEC InsertarPreferencia 
+    @Marca = 'Toyota', 
+    @Modelo = 'Hilux', 
+    @Anio = 2021, 
+    @KilometrosMin = 0, 
+    @KilometrosMax = 60000, 
+    @Color = 'Negro', 
+    @AceptaPermuta = 1, 
+    @UsuarioID = 1;
+EXEC InsertarPreferencia 
+    @Marca = 'Fiat', 
+    @Modelo = 'Cronos', 
+    @Anio = 2019, 
+    @KilometrosMin = 0, 
+    @KilometrosMax = 70000, 
+    @Color = 'Gris', 
+    @AceptaPermuta = 1, 
+    @UsuarioID = 6;
+EXEC InsertarPreferencia 
+    @Marca = 'Volvo', 
+    @Modelo = 'FH16', 
+    @Anio = 2016, 
+    @KilometrosMin = 100000, 
+    @KilometrosMax = 500000, 
+    @Color = 'Gris', 
+    @AceptaPermuta = 1, 
+    @UsuarioID = 4;
+
+
+GO
+
+-- INSERCIÓN DE DATOS PARA SWIPES VALIDOS.
+
+-- Usuario 1
+EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 2, @UsuarioID = 1;
+EXEC InsertarSwipe @Accion = 'SuperLike', @Fecha = '2025-06-25', @PublicacionID = 3, @UsuarioID = 1;
+
+-- Usuario 2 (no puede interactuar con publicación 2)
+EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 1, @UsuarioID = 2;
+EXEC InsertarSwipe @Accion = 'Dislike', @Fecha = '2025-06-25', @PublicacionID = 4, @UsuarioID = 2;
+
+-- Usuario 3 (no puede interactuar con publicaciones 3 y 4)
+EXEC InsertarSwipe @Accion = 'SuperLike', @Fecha = '2025-06-25', @PublicacionID = 1, @UsuarioID = 3;
+EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 5, @UsuarioID = 3;
+
+-- Usuario 4 (no puede interactuar con publicaciones 5 y 6)
+EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 1, @UsuarioID = 4;
+EXEC InsertarSwipe @Accion = 'SuperLike', @Fecha = '2025-06-25', @PublicacionID = 2, @UsuarioID = 4;
+
+-- Usuario 5 (no puede interactuar con publicación 1)
+EXEC InsertarSwipe @Accion = 'Dislike', @Fecha = '2025-06-25', @PublicacionID = 3, @UsuarioID = 5;
+EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 6, @UsuarioID = 5;
+
+-- Usuario 6
+EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 2, @UsuarioID = 6;
+EXEC InsertarSwipe @Accion = 'SuperLike', @Fecha = '2025-06-25', @PublicacionID = 5, @UsuarioID = 6;
+
+-- Usuario 7
+EXEC InsertarSwipe @Accion = 'Dislike', @Fecha = '2025-06-25', @PublicacionID = 4, @UsuarioID = 7;
+EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 6, @UsuarioID = 7;
