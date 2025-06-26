@@ -28,3 +28,6 @@ GROUP BY DATENAME(MONTH, p.Fecha), MONTH(p.Fecha), tv.Nombre;
 SELECT * 
 FROM VistaVehiculosVendidosPorMes
 ORDER BY Mes, VehiculosVendidos DESC;
+
+SELECT*FROM Vehiculo;
+Select * from 
