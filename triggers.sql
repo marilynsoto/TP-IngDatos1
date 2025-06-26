@@ -1,3 +1,6 @@
+USE CarSwipeDB;
+
+GO
 -- ===============================================================
 --  En los siguientes bloques definimos triggers orientados a 
 --  mantener la integridad de negocio y automatizar tareas.
@@ -20,7 +23,7 @@ BEGIN
     SELECT @CantActual = COUNT(*)
     FROM Publicacion P
     INNER JOIN Vehiculo V ON P.VehiculoID = V.VehiculoID
-    WHERE V.UsuarioID = @UsuarioID AND P.Estado IN ('Activo', 'Pausado');
+    WHERE V.UsuarioID = @UsuarioID AND P.Estado IN ('Activa', 'Pausada');
 
     IF @CantActual >= @CantMax
     BEGIN
@@ -46,7 +49,7 @@ BEGIN
     DECLARE @UsuarioID INT, @TipoPlanID INT, @CantMax INT, @CantActual INT, @Accion VARCHAR(50), @Fecha DATE;
     SELECT @UsuarioID = UsuarioID, @Accion = Accion, @Fecha = Fecha FROM inserted;
 
-    IF @Accion != 'Like'
+    IF @Accion != 'Superlike'
     BEGIN
         -- Si no es un Like, inserta directamente
         INSERT INTO Swipe (Accion, Fecha, PublicacionID, UsuarioID)
@@ -55,15 +58,15 @@ BEGIN
     END
 
     SELECT @TipoPlanID = TipoPlanID FROM Usuario WHERE UsuarioID = @UsuarioID;
-    SELECT @CantMax = CantLikesMax FROM TipoPlan WHERE TipoPlanID = @TipoPlanID;
+    SELECT @CantMax = CantSuperLikesMax FROM TipoPlan WHERE TipoPlanID = @TipoPlanID;
 
     SELECT @CantActual = COUNT(*)
     FROM Swipe
-    WHERE UsuarioID = @UsuarioID AND Accion = 'Like' AND Fecha = CAST(GETDATE() AS DATE);
+    WHERE UsuarioID = @UsuarioID AND Accion = 'Superlike' AND Fecha = CAST(GETDATE() AS DATE);
 
     IF @CantActual >= @CantMax
     BEGIN
-        RAISERROR('Se alcanzaron el límite de likes diarios permitidos por tu plan.', 16, 1);
+        RAISERROR('Se alcanzaron el límite de Superlikes diarios permitidos por tu plan.', 16, 1);
         ROLLBACK TRANSACTION;
         RETURN;
     END

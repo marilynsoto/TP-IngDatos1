@@ -1,4 +1,4 @@
-USE CarSwipeDB;
+USE TinDriveDB;
 
 GO
 
@@ -9,10 +9,10 @@ GO
 
 -- INSERCIÓN DE DATOS PARA TIPOPLAN
 
-EXEC InsertarTipoPlan @Nombre = 'Gratis', @CantPublicacionesMax = 1, @Precio = 0.00, @CantLikesMax = 4, @Duracion = 1;
-EXEC InsertarTipoPlan @Nombre = 'Básico', @CantPublicacionesMax = 5, @Precio = 2999.99, @CantLikesMax = 20, @Duracion = 1;
-EXEC InsertarTipoPlan @Nombre = 'Premium', @CantPublicacionesMax = 15, @Precio = 3999.99, @CantLikesMax = 50, @Duracion = 1;
-EXEC InsertarTipoPlan @Nombre = 'Ilimitado', @CantPublicacionesMax = 9999, @Precio = 9999.99, @CantLikesMax = 9999, @Duracion = 6;
+EXEC InsertarTipoPlan @Nombre = 'Gratis', @CantPublicacionesMax = 1, @Precio = 0.00, @CantSuperLikesMax = 4, @Duracion = 1;
+EXEC InsertarTipoPlan @Nombre = 'Básico', @CantPublicacionesMax = 5, @Precio = 2999.99, @CantSuperLikesMax = 20, @Duracion = 1;
+EXEC InsertarTipoPlan @Nombre = 'Premium', @CantPublicacionesMax = 15, @Precio = 3999.99, @CantSuperLikesMax = 50, @Duracion = 1;
+EXEC InsertarTipoPlan @Nombre = 'Ilimitado', @CantPublicacionesMax = 9999, @Precio = 9999.99, @CantSuperLikesMax = 9999, @Duracion = 6;
 
 GO
 -- INSERCIÓN DE DATOS PARA USUARIOS
@@ -39,6 +39,7 @@ EXEC InsertarTipoVehiculo @Nombre = 'Pickup';
 GO
 -- INSERCIÓN DE DATOS PARA VEHICULOS.
 EXEC InsertarVehiculo 
+    @Patente = 'ABC123',
     @Marca = 'Mercedes-Benz', 
     @Modelo = 'Sprinter', 
     @Anio = 2017, 
@@ -53,6 +54,7 @@ EXEC InsertarVehiculo
     @TipoVehiculoID = 1;
 
  EXEC InsertarVehiculo 
+    @Patente = 'JTZ849',
     @Marca = 'Ford', 
     @Modelo = 'EcoSport', 
     @Anio = 2019, 
@@ -67,6 +69,7 @@ EXEC InsertarVehiculo
     @TipoVehiculoID = 6;
 
 EXEC InsertarVehiculo 
+    @Patente = 'LQN506',
     @Marca = 'Honda', 
     @Modelo = 'CBR500R', 
     @Anio = 2020, 
@@ -81,6 +84,7 @@ EXEC InsertarVehiculo
     @TipoVehiculoID = 2;
 
 EXEC InsertarVehiculo 
+    @Patente = 'MKR771',
     @Marca = 'BMW', 
     @Modelo = 'Z4', 
     @Anio = 2019, 
@@ -95,6 +99,7 @@ EXEC InsertarVehiculo
     @TipoVehiculoID = 3;
 
 EXEC InsertarVehiculo 
+    @Patente = 'ZXY304',
     @Marca = 'Toyota', 
     @Modelo = 'Hilux', 
     @Anio = 2018, 
@@ -108,7 +113,8 @@ EXEC InsertarVehiculo
     @UsuarioID = 5, 
     @TipoVehiculoID = 5;
 
-	EXEC InsertarVehiculo 
+EXEC InsertarVehiculo
+	@Patente = 'RFD682',
     @Marca = 'Jeep', 
     @Modelo = 'Grand Cherokee', 
     @Anio = 2020, 
@@ -123,6 +129,7 @@ EXEC InsertarVehiculo
     @TipoVehiculoID = 6;
 
 EXEC InsertarVehiculo 
+    @Patente = 'VPM917',
     @Marca = 'Ford', 
     @Modelo = 'F-150', 
     @Anio = 2019, 
@@ -137,6 +144,7 @@ EXEC InsertarVehiculo
     @TipoVehiculoID = 7;
 
 EXEC InsertarVehiculo 
+    @Patente = 'CEK438',
     @Marca = 'Volvo', 
     @Modelo = 'FH16', 
     @Anio = 2015, 
@@ -265,19 +273,19 @@ GO
 
 -- Usuario 1
 EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 2, @UsuarioID = 1;
-EXEC InsertarSwipe @Accion = 'SuperLike', @Fecha = '2025-06-25', @PublicacionID = 3, @UsuarioID = 1;
+EXEC InsertarSwipe @Accion = 'Superlike', @Fecha = '2025-06-25', @PublicacionID = 3, @UsuarioID = 1;
 
 -- Usuario 2 (no puede interactuar con publicación 2)
 EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 1, @UsuarioID = 2;
 EXEC InsertarSwipe @Accion = 'Dislike', @Fecha = '2025-06-25', @PublicacionID = 4, @UsuarioID = 2;
 
 -- Usuario 3 (no puede interactuar con publicaciones 3 y 4)
-EXEC InsertarSwipe @Accion = 'SuperLike', @Fecha = '2025-06-25', @PublicacionID = 1, @UsuarioID = 3;
+EXEC InsertarSwipe @Accion = 'Superlike', @Fecha = '2025-06-25', @PublicacionID = 1, @UsuarioID = 3;
 EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 5, @UsuarioID = 3;
 
 -- Usuario 4 (no puede interactuar con publicaciones 5 y 6)
 EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 1, @UsuarioID = 4;
-EXEC InsertarSwipe @Accion = 'SuperLike', @Fecha = '2025-06-25', @PublicacionID = 2, @UsuarioID = 4;
+EXEC InsertarSwipe @Accion = 'Superlike', @Fecha = '2025-06-25', @PublicacionID = 2, @UsuarioID = 4;
 
 -- Usuario 5 (no puede interactuar con publicación 1)
 EXEC InsertarSwipe @Accion = 'Dislike', @Fecha = '2025-06-25', @PublicacionID = 3, @UsuarioID = 5;
@@ -285,8 +293,10 @@ EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 6, 
 
 -- Usuario 6
 EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 2, @UsuarioID = 6;
-EXEC InsertarSwipe @Accion = 'SuperLike', @Fecha = '2025-06-25', @PublicacionID = 5, @UsuarioID = 6;
+EXEC InsertarSwipe @Accion = 'Superlike', @Fecha = '2025-06-25', @PublicacionID = 5, @UsuarioID = 6;
 
 -- Usuario 7
 EXEC InsertarSwipe @Accion = 'Dislike', @Fecha = '2025-06-25', @PublicacionID = 4, @UsuarioID = 7;
 EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 6, @UsuarioID = 7;
+
+SELECT * FROM Publicacion;

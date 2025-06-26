@@ -1,4 +1,4 @@
-USE CarSwipeDB;
+USE TinDriveDB;
 
 GO
 
@@ -6,14 +6,14 @@ CREATE PROCEDURE InsertarTipoPlan
 	 @Nombre VARCHAR(50),
 	 @CantPublicacionesMax INT,
 	 @Precio DECIMAL(10,2),
-	 @CantLikesMax INT,
+	 @CantSuperLikesMax INT,
 	 @Duracion INT
 
 AS
 BEGIN
   
-    INSERT INTO TipoPlan (Nombre, CantPublicacionesMax, Precio, CantLikesMax, Duracion)
-	VALUES (@Nombre, @CantPublicacionesMax, @Precio, @CantLikesMax, @Duracion);
+    INSERT INTO TipoPlan (Nombre, CantPublicacionesMax, Precio, CantSuperLikesMax, Duracion)
+	VALUES (@Nombre, @CantPublicacionesMax, @Precio, @CantSuperLikesMax, @Duracion);
 
 	PRINT 'El Tipo de Plan fue insertado correctamente.';
 END;
@@ -70,6 +70,7 @@ END;
 GO
 
 CREATE PROCEDURE InsertarVehiculo
+     @Patente VARCHAR(50),
      @Marca VARCHAR(50),
 	 @Modelo VARCHAR(50),
 	 @Anio INT,
@@ -91,8 +92,8 @@ BEGIN
 		RETURN;
 	 END
 
-	 INSERT INTO Vehiculo (Marca, Modelo , Anio, Kilometros, Color, Detalles, TipoTransmicion, TipoCombustible, CantAsientos, AceptaPermuta, UsuarioID, TipoVehiculoID)
-	 VALUES (@Marca, @Modelo, @Anio, @Kilometros, @Color, @Detalles, @TipoTransmicion, @TipoCombustible, @CantAsientos, @AceptaPermuta, @UsuarioID, @TipoVehiculoID);
+	 INSERT INTO Vehiculo (Patente, Marca, Modelo , Anio, Kilometros, Color, Detalles, TipoTransmicion, TipoCombustible, CantAsientos, AceptaPermuta, UsuarioID, TipoVehiculoID)
+	 VALUES (@Patente, @Marca, @Modelo, @Anio, @Kilometros, @Color, @Detalles, @TipoTransmicion, @TipoCombustible, @CantAsientos, @AceptaPermuta, @UsuarioID, @TipoVehiculoID);
 
 	 PRINT'El Vehiculo fue insertado correctamente.';
 

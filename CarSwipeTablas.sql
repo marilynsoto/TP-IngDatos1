@@ -1,11 +1,11 @@
 /*Creamos el database TinderVehiculosDB para almacenar 
 la informaci�n de nuestro proyecto y poder trabajar sobre ello.
 */
-CREATE DATABASE CarSwipeDB;
+CREATE DATABASE TinDriveDB;
 
 GO
 
-USE CarSwipeDB;
+USE TinDriveDB;
 
 GO
 
@@ -25,7 +25,7 @@ CREATE TABLE TipoPlan(
 	   Nombre VARCHAR(50) NOT NULL,
 	   CantPublicacionesMax INT NOT NULL,
 	   Precio DECIMAL(10,2) NOT NULL,
-	   CantLikesMax INT NOT NULL,
+	   CantSuperLikesMax INT NOT NULL,
 	   Duracion INT NOT NULL,
 );
 
@@ -45,6 +45,7 @@ CREATE TABLE Usuario (
 
 CREATE TABLE Vehiculo (
        VehiculoID INT PRIMARY KEY IDENTITY(1,1),
+	   Patente VARCHAR(50) NOT NULL,
 	   Marca VARCHAR(50) NOT NULL,
 	   Modelo VARCHAR(50) NOT NULL,
 	   Anio INT NOT NULL,
@@ -71,7 +72,7 @@ CREATE TABLE Publicacion (
 	   VehiculoID INT,
 	   FOREIGN KEY (VehiculoID) REFERENCES Vehiculo(VehiculoID),
 	   CONSTRAINT chk_Precio CHECK (Precio >= 0),
-	   CONSTRAINT chk_Estado CHECK (Estado IN ('Activo', 'Pausado', 'Vendida', 'Eliminada')),
+	   CONSTRAINT chk_Estado CHECK (Estado IN ('Activa', 'Pausada', 'Vendida', 'Eliminada')),
 );
 
 CREATE TABLE Swipe (
@@ -82,7 +83,7 @@ CREATE TABLE Swipe (
 	   UsuarioID INT, --quien interactua con la publicaci�n
 	   FOREIGN KEY (PublicacionID) REFERENCES Publicacion(PublicacionID),
 	   FOREIGN KEY (UsuarioID) REFERENCES Usuario(UsuarioID),
-	   CONSTRAINT chk_Accion CHECK (Accion IN ('Like', 'Dislike', 'SuperLike'))
+	   CONSTRAINT chk_Accion CHECK (Accion IN ('Like', 'Dislike', 'Superlike'))
 
 );
 
@@ -118,3 +119,4 @@ GO
 ALTER TABLE Vehiculo
 ADD CONSTRAINT fk_Vehiculo_TipoVehiculo FOREIGN KEY (TipoVehiculoID) REFERENCES TipoVehiculo(TipoVehiculoID);
 
+DBCC CHECKIDENT ('Swipe', NORESEED);
