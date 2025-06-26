@@ -165,13 +165,15 @@ EXEC InsertarPublicacion
     @Descripcion = 'Camioneta lista para el trabajo pesado. Impecable.',
     @Precio = 19500000.00,
     @Fecha = '2025-06-24',
-    @Estado = 'Activo',
+    @Estado = 'Activa',
     @VehiculoID = 5;
+SELECT*FROM Publicacion;
+
 EXEC InsertarPublicacion 
     @Descripcion = 'Moto deportiva en excelente estado.Además posee los papeles correspondientes.',
     @Precio = 5240000.00,
     @Fecha = '2025-06-24',
-    @Estado = 'Activo',
+    @Estado = 'Activa',
     @VehiculoID = 3;
 
 EXEC InsertarPublicacion 
@@ -184,7 +186,7 @@ EXEC InsertarPublicacion
     @Descripcion = 'Convertible de lujo.Primer dueño.',
     @Precio = 30000000.00,
     @Fecha = '2025-07-24',
-    @Estado = 'Activo',
+    @Estado = 'Activa',
     @VehiculoID = 4;
 EXEC InsertarPublicacion 
     @Descripcion = 'Camión Volvo preparado para transporte de carga pesada.Se encuentra en un estado perfecto, como nuevo.',
@@ -196,9 +198,15 @@ EXEC InsertarPublicacion
     @Descripcion = 'Camión Volvo preparado para transporte de carga pesada.Se encuentra en un estado perfecto, como nuevo.',
     @Precio = 58000000.00,
     @Fecha = '2025-06-24',
-    @Estado = 'Activo',
+    @Estado = 'Activa',
     @VehiculoID = 7;
 
+EXEC InsertarPublicacion 
+    @Descripcion = 'Camión Volvo preparado para transporte de carga pesada.Se encuentra en un estado perfecto, como nuevo.',
+    @Precio = 58000000.00,
+    @Fecha = '2025-06-24',
+    @Estado = 'Vendida',
+    @VehiculoID = 7;
 GO
 -- INSERCION DE DATOS PARA PREFERENCIAS.
 
@@ -299,4 +307,3 @@ EXEC InsertarSwipe @Accion = 'Superlike', @Fecha = '2025-06-25', @PublicacionID 
 EXEC InsertarSwipe @Accion = 'Dislike', @Fecha = '2025-06-25', @PublicacionID = 4, @UsuarioID = 7;
 EXEC InsertarSwipe @Accion = 'Like', @Fecha = '2025-06-25', @PublicacionID = 6, @UsuarioID = 7;
 
-SELECT * FROM Publicacion;
